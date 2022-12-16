@@ -18,13 +18,22 @@
         <td>{{user.role.name}}</td>
         <td></td>
       </tr>
-
       </tbody>
     </table>
   </div>
+  <nav>
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0)" @click="prev">Previous</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0)" @click="next">Next</a>
+    </li>
+  </ul>
+  </nav>
 </template>
 
-<script>
+<script lang="ts">
 import {ref, onMounted} from 'vue';
 import axios from "axios";
 
@@ -33,14 +42,29 @@ export default {
 
   setup() {
     const users = ref([]);
+    const page = ref(1);
 
-    onMounted(async () => {
-      const response = await axios.get('users');
-
+    const load = async () => {
+      const response = await axios.get('users?page=${page.value}');
       users.value = response.data.data;
-    });
+    }
+
+    onMounted(load);
+
+const next = async () => {
+page.value++;
+  await load();
+    }
+
+    const prev = async() => {
+page.value--;
+await load();
+    }
+
     return {
-      users
+      users,
+      next,
+      prev
     }
   }
 }
