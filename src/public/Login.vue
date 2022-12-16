@@ -37,6 +37,7 @@ export default {
       });
 
       localStorage.setItem('token', responce.data.token);
+      axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
       await router.push('/');
 
