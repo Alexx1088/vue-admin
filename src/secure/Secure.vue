@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import {onMounted, ref} from "vue";
-import Menu from "@/secure/components/Menu";
-import Nav from "@/secure/components/Nav";
+import Menu from "@/secure/components/Menu.vue";
+import Nav from "@/secure/components/Nav.vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
@@ -33,10 +33,9 @@ export default {
 
     onMounted(async () => {
       try {
-
         const response = await axios.get('user');
 
-        const u: User = response.data.data;
+        const u = response.data.data;
 
         await store.dispatch('User/setUser', new User(
             u.id,
@@ -47,7 +46,7 @@ export default {
             u.permissions
         ));
 
-        user.value = u;
+ user.value = u;
 
       } catch (e) {
         await router.push('/login');
