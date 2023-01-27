@@ -44,9 +44,9 @@ export default {
     const router = useRouter();
 
     onMounted(async () => {
-      const responce = await axios.get('roles');
+      const response = await axios.get('roles');
 
-      roles.value = responce.data.data;
+      roles.value = response.data.data;
     });
 
     const submit = async () =>{
